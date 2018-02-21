@@ -5,12 +5,12 @@ import javax.swing.filechooser.FileFilter;
 
 
 
-public class PlayerFileFilter extends FileFilter {
+public class Mp3PlayerFileFilter extends FileFilter {
 
     private String extensionFile;
     private String descriptionFile;
 
-    public PlayerFileFilter(String extensionFile, String descriptionFile) {
+    public Mp3PlayerFileFilter(String extensionFile, String descriptionFile) {
         this.extensionFile = extensionFile;
         this.descriptionFile = descriptionFile;
     }

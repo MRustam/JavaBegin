@@ -8,23 +8,43 @@ package guiStart;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 import com.jtattoo.plaf.mint.MintLookAndFeel;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import objects.Mp3;
+import utils.FileUtils;
+import utils.Mp3PlayerFileFilter;
 import utils.SkinUtils;
+
 
 /**
  *
  * @author rustam
  */
-public class PleerOnSwingxForm extends javax.swing.JFrame {
+public class PleerOnSwingxStart extends javax.swing.JFrame {
 
+    private static final String MP3_FILE_EXTENSION = "mp3";
+    private static final String MP3_FILE_DESCRIPTION = "Файлы mp3";
+    private static final String PLAYLIST_FILE_EXTENSION = "pls";
+    private static final String PLAYLIST_FILE_DESCRIPTION = "Файлы плейлиста";
+    private static final String EMPTY_STRING = "";
+    private static final String INPUT_SONG_NAME = "input name of song";
+    
+    private DefaultListModel listMp3Model = new DefaultListModel();
+    private Mp3PlayerFileFilter Mp3playerFileFilter = new Mp3PlayerFileFilter(MP3_FILE_EXTENSION, MP3_FILE_DESCRIPTION);
+    private FileFilter playlistFileFilter = new Mp3PlayerFileFilter(PLAYLIST_FILE_EXTENSION, PLAYLIST_FILE_DESCRIPTION);
     /**
      * Creates new form PleerOnSwingxForm
      */
-    public PleerOnSwingxForm() {
+    public PleerOnSwingxStart() {
         initComponents();
     }
     
@@ -37,7 +57,7 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jButtonSearch = new javax.swing.JButton();
         jTextFieldSearch = new javax.swing.JTextField();
@@ -50,7 +70,7 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
         jSliderVolume = new javax.swing.JSlider();
         jToggleButtonV = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListPlayList = new javax.swing.JList();
         jButtonAddSong = new javax.swing.JButton();
         jButtonDeleteSong = new javax.swing.JButton();
         jButtonScrollDown = new javax.swing.JButton();
@@ -68,7 +88,8 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
         jSubMenuChangeSkin2 = new javax.swing.JMenuItem();
         jSubMenuChangeSkin3 = new javax.swing.JMenuItem();
 
-        jFileChooser1.setAcceptAllFileFilterUsed(false);
+        jFileChooser.setAcceptAllFileFilterUsed(false);
+        jFileChooser.setMultiSelectionEnabled(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -82,12 +103,30 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
         jButtonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/search_16.png"))); // NOI18N
         jButtonSearch.setText("Search");
         jButtonSearch.setToolTipText("Search treck");
+        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchActionPerformed(evt);
+            }
+        });
 
         jTextFieldSearch.setFont(new java.awt.Font("Lucida Grande", 2, 13)); // NOI18N
         jTextFieldSearch.setForeground(new java.awt.Color(204, 204, 204));
-        jTextFieldSearch.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextFieldSearch.setText("insert name of song");
+        jTextFieldSearch.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldSearch.setText("input name of song");
         jTextFieldSearch.setSelectedTextColor(new java.awt.Color(204, 204, 204));
+        jTextFieldSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchFocusLost(evt);
+            }
+        });
+        jTextFieldSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,6 +165,11 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
 
         jButtonPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/Play.png"))); // NOI18N
         jButtonPlay.setToolTipText("Play music");
+        jButtonPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPlayActionPerformed(evt);
+            }
+        });
 
         jButtonNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/next-icon.png"))); // NOI18N
         jButtonNext.setToolTipText("Next track");
@@ -144,20 +188,41 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
 
         jScrollPane1.setToolTipText("playlist");
 
-        jList1.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        jListPlayList.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
+        jListPlayList.setModel(listMp3Model);
+        jScrollPane1.setViewportView(jListPlayList);
 
         jButtonAddSong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/plus_16.png"))); // NOI18N
         jButtonAddSong.setToolTipText("Add new track");
+        jButtonAddSong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddSongActionPerformed(evt);
+            }
+        });
 
         jButtonDeleteSong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/remove_icon.png"))); // NOI18N
         jButtonDeleteSong.setToolTipText("Remove selected track");
+        jButtonDeleteSong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteSongActionPerformed(evt);
+            }
+        });
 
         jButtonScrollDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/arrow-down-icon.png"))); // NOI18N
         jButtonScrollDown.setToolTipText("Scroll down");
+        jButtonScrollDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonScrollDownActionPerformed(evt);
+            }
+        });
 
         jButtonScrollUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/arrow-up-icon.png"))); // NOI18N
         jButtonScrollUp.setToolTipText("Scroll up");
+        jButtonScrollUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonScrollUpActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -233,12 +298,22 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
         jMenuOpenPlayList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/open-icon.png"))); // NOI18N
         jMenuOpenPlayList.setText("Open playlist");
         jMenuOpenPlayList.setToolTipText("Open new playlist");
+        jMenuOpenPlayList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuOpenPlayListActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuOpenPlayList);
 
         jMenuSavePlaylist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.META_MASK));
         jMenuSavePlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagesPleer/save_16.png"))); // NOI18N
         jMenuSavePlaylist.setText("Save playlist");
         jMenuSavePlaylist.setToolTipText("Save current playlist");
+        jMenuSavePlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSavePlaylistActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuSavePlaylist);
         jMenuFile.add(jSeparator1);
 
@@ -334,6 +409,172 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
         SkinUtils.changeSkin(new MintLookAndFeel(), this);
         
     }//GEN-LAST:event_jSubMenuChangeSkin3Pressed
+// Add song Button.
+    private void jButtonAddSongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddSongActionPerformed
+        FileUtils.setFileFilter(jFileChooser, Mp3playerFileFilter);
+        int result = jFileChooser.showOpenDialog(this);
+        
+        if (result == jFileChooser.APPROVE_OPTION) {
+            File [] selectedFiles = jFileChooser.getSelectedFiles();
+            
+            for (File file : selectedFiles) {
+                Mp3 mp3 = new Mp3(file.getName(), file.getPath());
+                if (!(listMp3Model.contains(mp3))) {
+                    listMp3Model.addElement(mp3);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButtonAddSongActionPerformed
+// Remove song.
+//
+    private void jButtonDeleteSongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteSongActionPerformed
+        
+        int[] indicesArrayForRemove = jListPlayList.getSelectedIndices();// Array to get indices of selected songs.
+        
+        if (indicesArrayForRemove.length > 0) { // If chosed even one song.
+            
+            List<Mp3> collectionForRemove = new ArrayList<Mp3>(); // Collection of selected files to removing.
+            
+            for (int i = 0; i < indicesArrayForRemove.length; i++) { // If ech element instance of Mp3.
+                
+                if (listMp3Model.getElementAt(indicesArrayForRemove[i]) instanceof Mp3) {
+                    Mp3 mp3 = (Mp3)listMp3Model.getElementAt(indicesArrayForRemove[i]);
+                    collectionForRemove.add(mp3); // Add to collection Mp3.
+                }
+            }
+            for (Mp3 mp3 : collectionForRemove) { // Remove Mp3 from song List.
+                listMp3Model.removeElement(mp3);
+            }
+        }
+        
+    }//GEN-LAST:event_jButtonDeleteSongActionPerformed
+// Select next song.
+//
+    private void jButtonScrollDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScrollDownActionPerformed
+       int index = jListPlayList.getSelectedIndex() + 1;
+       if (index <= jListPlayList.getModel().getSize() - 1) {
+           jListPlayList.setSelectedIndex(index);
+       }
+    }//GEN-LAST:event_jButtonScrollDownActionPerformed
+// Select previos song.
+//
+    private void jButtonScrollUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScrollUpActionPerformed
+        int index = jListPlayList.getSelectedIndex() - 1;
+        if (index >= 0) {
+           jListPlayList.setSelectedIndex(index);
+       }
+    }//GEN-LAST:event_jButtonScrollUpActionPerformed
+// Play song button.
+//
+    private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
+        int[] indicesArrayForPlay = jListPlayList.getSelectedIndices();
+        if (indicesArrayForPlay.length > 0) {
+            if (listMp3Model.getElementAt(indicesArrayForPlay[0]) instanceof Mp3) {
+                Mp3 mp3File = (Mp3)listMp3Model.getElementAt(indicesArrayForPlay[0]);
+                System.out.println(mp3File.getPath());
+            }
+        }
+    }//GEN-LAST:event_jButtonPlayActionPerformed
+
+    private void jMenuSavePlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSavePlaylistActionPerformed
+        
+        FileUtils.setFileFilter(jFileChooser, playlistFileFilter);
+        
+        int result = jFileChooser.showSaveDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {// если нажата клавиша OK или YES
+            
+            File selectedFile = jFileChooser.getSelectedFile();
+            
+            if (selectedFile.exists()) {// если такой файл уже существует
+
+                int resultOvveride = JOptionPane.showConfirmDialog(this, "Файл существует", "Перезаписать?", JOptionPane.YES_NO_CANCEL_OPTION);
+                
+                switch (resultOvveride) {
+                    case JOptionPane.NO_OPTION:
+                        jMenuSavePlaylistActionPerformed(evt);// повторно открыть окно сохранения файла
+                        return;
+                    case JOptionPane.CANCEL_OPTION:
+                        jFileChooser.cancelSelection();
+                        return;
+                        
+                }
+                jFileChooser.approveSelection();
+            }
+
+            String fileExtension = FileUtils.getFileExtension(selectedFile);
+
+            // имя файла (нужно ли добавлять раширение к имени файлу при сохранении)
+            String fileNameForSave = (fileExtension != null && fileExtension.equals(PLAYLIST_FILE_EXTENSION)) ? selectedFile.getPath() : selectedFile.getPath() + "." + PLAYLIST_FILE_EXTENSION;
+
+            FileUtils.serialize(listMp3Model, fileNameForSave);
+        }
+    }//GEN-LAST:event_jMenuSavePlaylistActionPerformed
+
+    private void jMenuOpenPlayListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuOpenPlayListActionPerformed
+        
+        FileUtils.setFileFilter(jFileChooser, playlistFileFilter);
+        int result = jFileChooser.showOpenDialog(this);// result хранит результат: выбран файл или нет
+
+        if (result == JFileChooser.APPROVE_OPTION) {// если нажата клавиша OK или YES
+            File selectedFile = jFileChooser.getSelectedFile();
+            DefaultListModel listMp3Model = (DefaultListModel)FileUtils.deserialize(selectedFile.getPath());
+            this.listMp3Model = listMp3Model;
+            jListPlayList.setModel(listMp3Model);
+        }
+    }//GEN-LAST:event_jMenuOpenPlayListActionPerformed
+
+    private void jTextFieldSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusGained
+        
+        if(jTextFieldSearch.getText().equals(INPUT_SONG_NAME)) {
+            jTextFieldSearch.setText(EMPTY_STRING);
+        }
+    }//GEN-LAST:event_jTextFieldSearchFocusGained
+
+    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
+        String searchResultStr = jTextFieldSearch.getText();
+        
+        if (searchResultStr.trim().equals(EMPTY_STRING) || searchResultStr == null) {
+            return;
+        }
+        
+        // все индексы объектов, найденных по поиску, будут храниться в коллекции
+        ArrayList<Integer> mp3FindedIndices = new ArrayList<Integer>();
+
+        // проходим по коллекции и ищем соответствия имен песен со строкой поиска
+        for (int i = 0; i < listMp3Model.size(); i++) {
+            Mp3 mp3 = (Mp3)listMp3Model.getElementAt(i);
+            // поиск вхождения строки в название песни без учета регистра букв
+            if (mp3.getName().toUpperCase().contains(searchResultStr.toUpperCase())) {
+                mp3FindedIndices.add(i);// найденный индексы добавляем в коллекцию
+            }
+        }
+        int[] selectedIndices = new int[mp3FindedIndices.size()];
+        if (selectedIndices.length == 0) {
+            JOptionPane.showMessageDialog(this, "Searching \'" + searchResultStr + "\' didn't give result");
+            jTextFieldSearch.requestFocus();
+            jTextFieldSearch.selectAll();
+            return;
+        }
+        // преобразовать коллекцию в массив, т.к. метод для выделения строк в JList работает только с массивом
+        for (int i = 0; i < selectedIndices.length; i++) {
+            selectedIndices[i] = mp3FindedIndices.get(i).intValue();
+        }
+
+        // выделить в плелисте найдные песни по массиву индексов, найденных ранее
+        jListPlayList.setSelectedIndices(selectedIndices);
+        
+    }//GEN-LAST:event_jButtonSearchActionPerformed
+
+    private void jTextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSearchActionPerformed
+
+    private void jTextFieldSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusLost
+        if (jTextFieldSearch.getText().trim().equals(EMPTY_STRING)) {
+            jTextFieldSearch.setText(INPUT_SONG_NAME);
+        }
+    }//GEN-LAST:event_jTextFieldSearchFocusLost
 
     /**
      * @param args the command line arguments
@@ -344,13 +585,13 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
             UIManager.setLookAndFeel(new MintLookAndFeel());
             //</editor-fold>
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(PleerOnSwingxForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PleerOnSwingxStart.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PleerOnSwingxForm().setVisible(true);
+                new PleerOnSwingxStart().setVisible(true);
             }
         });
     }
@@ -366,8 +607,8 @@ public class PleerOnSwingxForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonScrollUp;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JButton jButtonStop;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JList jList1;
+    private javax.swing.JFileChooser jFileChooser;
+    private javax.swing.JList jListPlayList;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuChangeSkin;
     private javax.swing.JMenu jMenuEdit;
