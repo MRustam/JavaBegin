@@ -308,11 +308,6 @@ public class PleerOnSwingxStart extends javax.swing.JFrame implements BasicPlaye
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mp3 Player");
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pressedKeySkin1(evt);
-            }
-        });
 
         jPanelSearch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -489,6 +484,11 @@ public class PleerOnSwingxStart extends javax.swing.JFrame implements BasicPlaye
 
         jLabelNameOfSong.setText("...");
 
+        jSliderProgres.setMaximum(1000);
+        jSliderProgres.setMinorTickSpacing(1);
+        jSliderProgres.setSnapToTicks(true);
+        jSliderProgres.setToolTipText("volume");
+        jSliderProgres.setValue(0);
         jSliderProgres.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSliderProgresStateChanged(evt);
@@ -676,10 +676,6 @@ public class PleerOnSwingxStart extends javax.swing.JFrame implements BasicPlaye
             jSliderVolume.setValue(currentVolumeValue);
         }
     }//GEN-LAST:event_jToggleButtonVolumeActionPerformed
-
-    private void pressedKeySkin1(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pressedKeySkin1
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pressedKeySkin1
 
     private void jSubMenuChangeSkin1Pressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSubMenuChangeSkin1Pressed
         
@@ -958,10 +954,10 @@ public class PleerOnSwingxStart extends javax.swing.JFrame implements BasicPlaye
     private javax.swing.JPanel jPanelSearch;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator;
+    private javax.swing.JPopupMenu.Separator jSeparator;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JSlider jSliderProgres;
     private javax.swing.JSlider jSliderVolume;
     private javax.swing.JMenuItem jSubMenuChangeSkin1;
