@@ -1,4 +1,4 @@
-/*--вывести всех продавцов которые продали авто обьемом свыше 3л.
+--вывести всех продавцов которые продали авто обьемом свыше 3л.
 SELECT
      fio AS ФИО,
      birthday AS День_рождения,
@@ -7,9 +7,11 @@ FROM Seller se
 LEFT JOIN Sold so ON se.id = so.seller_id
 INNER JOIN Transport tr ON so.transport_id = tr.id
 INNER JOIN Car cr ON tr.id = cr.id
-WHERE selle_date IS NOT NULL AND cr.volume > 3*/
+WHERE cr.volume > 3
 
---вывести всех продавцов которые продали хотябы одно авто с электородвигателем 
+GROUP BY fio
+
+/*--вывести всех продавцов которые продали хотябы одно авто с электородвигателем 
 SELECT
     se.fio AS продавец,
     se.birthday AS день_рождения,
@@ -21,4 +23,4 @@ INNER JOIN dir_brend br ON tr.brend_id = br.id
 INNER JOIN Seller se ON co.seller_id = se.id
 INNER JOIN dir_engine_type et ON tr.engine_type_id = et.id
 
-WHERE engine_type_id = 4
+--WHERE engine_type_id = 4*/

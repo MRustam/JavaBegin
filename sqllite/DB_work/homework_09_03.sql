@@ -1,5 +1,5 @@
---Вывести все данные о всех авто
-
+--вывести все записи по всем авто но только для марки Порше и ценой > 50000 E
+--Вывести все данные об авто
 SELECT
     cr.transport_id AS id,
     
@@ -19,4 +19,4 @@ SELECT
     
 FROM Transport tr, Car cr
 
-WHERE cr.transport_id = tr.id
+WHERE cr.transport_id = tr.id AND tr.brend_id = 6 AND tr.price > 50000

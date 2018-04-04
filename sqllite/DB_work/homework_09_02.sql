@@ -1,4 +1,4 @@
---Вывести все данные о всех авто
+--Вывести все данные о проданных авто
 
 SELECT
     cr.transport_id AS id,
@@ -19,4 +19,5 @@ SELECT
     
 FROM Transport tr, Car cr
 
-WHERE cr.transport_id = tr.id
+WHERE cr.transport_id IN (SELECT transport_id FROM Sold) AND cr.transport_id = tr.id
+
