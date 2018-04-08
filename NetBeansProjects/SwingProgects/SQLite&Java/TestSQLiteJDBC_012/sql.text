@@ -1,0 +1,22 @@
+jdbc:sqlite:../../TestSQLiteJDBC_012/Transport_market.db
+
+
+SELECT * FROM dir_model;
+
+
+SELECT * FROM dir_brend;
+
+
+SELECT * FROM dir_country;
+
+
+SELECT * FROM dir_body_type;
+
+
+SELECT * FROM dir_color;
+
+
+SELECT * FROM dir_transmission_type;
+
+
+SELECT * FROM dir_currency;
