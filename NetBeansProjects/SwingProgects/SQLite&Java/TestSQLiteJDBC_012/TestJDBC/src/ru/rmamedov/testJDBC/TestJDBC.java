@@ -1,7 +1,6 @@
 package ru.rmamedov.testJDBC;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -34,7 +33,7 @@ public class TestJDBC {
             scanner = new Scanner(fis = new FileInputStream("../../TestSQLiteJDBC_012/sql.text"));
             url = scanner.nextLine();
             
-//            if (!new File(url).exists()) {
+//            if (!(new File(url).exists())) {
 //                System.out.println("File of DB not found");
 //                return;
 //            }
