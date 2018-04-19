@@ -16,7 +16,7 @@
    <children>
       <AnchorPane prefHeight="68.0" prefWidth="600.0">
          <children>
-            <Button fx:id="addButton" layoutX="101.0" layoutY="18.0" mnemonicParsing="false" onAction="#showDialog" prefHeight="32.0" prefWidth="103.0" text="Add" AnchorPane.leftAnchor="101.0">
+            <Button fx:id="buttonAdd" layoutX="101.0" layoutY="18.0" mnemonicParsing="false" onAction="#showDialog" prefHeight="32.0" prefWidth="103.0" text="Add" AnchorPane.leftAnchor="101.0">
                <effect>
                   <Blend />
                </effect>
@@ -24,7 +24,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Button fx:id="updateButton" layoutX="249.0" layoutY="18.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="103.0" text="Update">
+            <Button fx:id="buttonUpdate" layoutX="249.0" layoutY="18.0" mnemonicParsing="false" onAction="#showDialog" prefHeight="32.0" prefWidth="103.0" text="Update">
                <effect>
                   <Blend />
                </effect>
@@ -32,7 +32,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Button fx:id="deleteButton" layoutX="399.0" layoutY="18.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="103.0" text="Delete">
+            <Button fx:id="buttonDelete" layoutX="399.0" layoutY="18.0" mnemonicParsing="false" onAction="#showDialog" prefHeight="32.0" prefWidth="103.0" text="Delete">
                <effect>
                   <Blend />
                </effect>
@@ -45,20 +45,20 @@
       </AnchorPane>
       <AnchorPane prefHeight="56.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="searchTextField" layoutX="99.0" layoutY="6.0" minHeight="32.0" prefHeight="32.0" prefWidth="305.0" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="193.0">
+            <TextField fx:id="textFieldSearch" layoutX="99.0" layoutY="6.0" minHeight="32.0" prefHeight="32.0" prefWidth="305.0" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="193.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </TextField>
-            <Button fx:id="searchButton" layoutX="444.0" layoutY="6.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="65.0" text="Search" AnchorPane.rightAnchor="97.0" />
+            <Button fx:id="buttonSearch" layoutX="444.0" layoutY="6.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="65.0" text="Search" AnchorPane.rightAnchor="97.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <TableView fx:id="addressTable" layoutX="14.0" prefHeight="200.0" prefWidth="579.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="1.0">
+            <TableView fx:id="tableAddressBook" layoutX="14.0" prefHeight="200.0" prefWidth="579.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="1.0">
               <columns>
-                <TableColumn prefWidth="284.0" text="Name" />
-                <TableColumn prefWidth="285.0" text="Phone number" />
+                <TableColumn fx:id="columnName" prefWidth="284.0" text="Name" />
+                <TableColumn fx:id="columnPhone" prefWidth="285.0" text="Phone number" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -71,7 +71,7 @@
             <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
          </VBox.margin>
          <children>
-            <Label fx:id="countLabel" text="Count:" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" />
+            <Label fx:id="labelCounter" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>
