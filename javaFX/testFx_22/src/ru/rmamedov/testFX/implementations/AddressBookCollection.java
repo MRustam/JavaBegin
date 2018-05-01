@@ -1,9 +1,9 @@
-package implementations;
+package ru.rmamedov.testFX.implementations;
 
-import interfaces.AddressBook;
+import ru.rmamedov.testFX.interfaces.AddressBook;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import objects.Person;
+import ru.rmamedov.testFX.objects.Person;
 
 public class AddressBookCollection implements AddressBook {
 

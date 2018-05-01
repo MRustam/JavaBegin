@@ -1,6 +1,6 @@
-package controllers;
+package ru.rmamedov.testFX.controllers;
 
-import implementations.AddressBookCollection;
+import ru.rmamedov.testFX.implementations.AddressBookCollection;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,12 +14,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import objects.Person;
+import ru.rmamedov.testFX.objects.Person;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.PropertyResourceBundle;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -46,9 +45,13 @@ public class MainController implements Initializable {
     private Button buttonDelete;
 
     private Parent root;
+
     private FXMLLoader loader = new FXMLLoader();
+
     private EditDialogController editDialogController;
+
     private Stage stageEdit;
+
     private Stage stageMain;
 
     private ResourceBundle resourceBundle;
@@ -69,11 +72,8 @@ public class MainController implements Initializable {
 
     private void initLoader() {
         try {
-            ResourceBundle bundle;
             loader.setLocation(getClass().getResource("../fxml/editPane.fxml"));
-            FileInputStream fis = new FileInputStream("/Users/rustam/programming/java/JavaBegin/javaFX/testFx_21_my/src/ru.rmamedov.testFX/bundles/Locale_en.properties");
-            bundle = new PropertyResourceBundle(fis);
-            loader.setResources(bundle);
+            loader.setResources(ResourceBundle.getBundle("ru.rmamedov.testFX.bundles/Locale"));
             root = loader.load();
             editDialogController = loader.getController();
         } catch (IOException e) {

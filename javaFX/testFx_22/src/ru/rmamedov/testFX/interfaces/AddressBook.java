@@ -1,6 +1,6 @@
-package interfaces;
+package ru.rmamedov.testFX.interfaces;
 
-import objects.Person;
+import ru.rmamedov.testFX.objects.Person;
 
 public interface AddressBook {
 

@@ -1,27 +1,27 @@
-package start;
+package ru.rmamedov.testFX.start;
 
-import controllers.MainController;
+import ru.rmamedov.testFX.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.util.PropertyResourceBundle;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+    private static final Locale DEFAULT_LOCALE = new Locale("ru");
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ResourceBundle bundle;
+        Locale.setDefault(DEFAULT_LOCALE);
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("../fxml/main.fxml"));
-        FileInputStream fis = new FileInputStream("/Users/rustam/programming/java/JavaBegin/javaFX/testFx_21_my/src/ru.rmamedov.testFX/bundles/Locale_en.properties");
-        bundle = new PropertyResourceBundle(fis);
-        loader.setResources(bundle);
+        loader.setResources(ResourceBundle.getBundle("ru.rmamedov.testFX.bundles.Locale"));
 
         Parent root = loader.load();
         MainController mainController = loader.getController();

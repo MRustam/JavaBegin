@@ -1,4 +1,4 @@
-package objects;
+package ru.rmamedov.testFX.objects;
 
 import javafx.beans.property.SimpleStringProperty;
 
